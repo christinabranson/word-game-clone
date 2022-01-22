@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useGameDispatch, useGameState, GAME_ACTIONS } from "./gameContext";
 import { validateWord } from "../dictionary/handleWords";
 
@@ -16,22 +16,20 @@ const NewGuess = () => {
   };
 
   const handleGuessInput = (event, index) => {
-    console.log("handleGuessInput " + index);
     const getValue = () => {
       let value = event.target.value;
-      console.log({ value });
       if (value.length > 1) {
         value = value[value.length - 1];
       }
       return value;
     };
 
+    setErrorMessage(null);
+
     const value = getValue();
-    console.log({ value });
 
     const newGuess = JSON.parse(JSON.stringify(guess));
     newGuess[index] = value;
-    console.log({ newGuess });
     setGuess(newGuess);
 
     if (!value.length) {
@@ -56,7 +54,9 @@ const NewGuess = () => {
   const handleSubmitGuess = async (event) => {
     event.preventDefault();
     const guessAsArray = Object.keys(guess).map((key) => guess[key]);
-    const guessAsWord = guessAsArray.join("");
+    const guessAsWord = guessAsArray.join("").toLowerCase();
+
+    handleResetGuess();
 
     const isWordValid = await validateWord(guessAsWord);
 
@@ -65,7 +65,7 @@ const NewGuess = () => {
       return;
     }
 
-    if (guessAsWord == gameState.word) {
+    if (guessAsWord === gameState.word) {
       gameDispatch({
         type: GAME_ACTIONS.WIN_GAME,
         payload: { guess: guessAsArray },
@@ -76,7 +76,6 @@ const NewGuess = () => {
         payload: { guess: guessAsArray },
       });
     }
-    handleResetGuess();
   };
 
   if (gameState.isGameWon) {
@@ -85,12 +84,10 @@ const NewGuess = () => {
 
   const handleResetGuess = () => {
     setGuess(initialGuess);
-    setErrorMessage(null);
   };
 
   return (
     <form>
-      <pre>{false && JSON.stringify(guess, null, 2)}</pre>
       {errorMessage && (
         <div className="alert alert-danger" role="alert">
           {errorMessage}
@@ -110,7 +107,7 @@ const NewGuess = () => {
           type="button"
           className="btn btn-outline-danger btn-sm"
         >
-          Reset
+          Reset guess
         </button>
       </div>
     </form>

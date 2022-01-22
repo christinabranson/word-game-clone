@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { useGameDispatch, useGameState, startNewGame } from "./gameContext";
+import {
+  useGameDispatch,
+  useGameState,
+  startNewGame,
+  GAME_ACTIONS,
+} from "./gameContext";
 import NewGuess from "./NewGuess";
 import PreviousGuesses from "./PreviousGuesses";
 
 const Game = () => {
   const gameState = useGameState();
   const gameDispatch = useGameDispatch();
-  console.log({ gameState });
+  const isInputEnabled = !gameState.shouldRevealWord && !gameState.isGameWon;
 
   useEffect(() => {
     if (!gameState.word) {
@@ -18,11 +23,44 @@ const Game = () => {
     startNewGame(gameDispatch);
   };
 
+  const handleRevealWord = () => {
+    gameDispatch({ type: GAME_ACTIONS.GIVE_UP });
+  };
+
+  const renderRevealWord = () => {
+    if (gameState.shouldRevealWord) {
+      return (
+        <div className="alert alert-warning" role="alert">
+          You have failed. Your word was <strong>{gameState.word}</strong>
+          <br />
+          <br />
+          <button
+            onClick={handleStartNewGameClick}
+            type="button"
+            className="btn btn-warning"
+          >
+            Start new game
+          </button>
+        </div>
+      );
+    }
+    return null;
+  };
+
   const renderGameWonBanner = () => {
     if (gameState.isGameWon) {
       return (
-        <div class="alert alert-success" role="alert">
-          You won!
+        <div className="alert alert-success" role="alert">
+          <strong>You won!</strong>
+          <br />
+          <br />
+          <button
+            onClick={handleStartNewGameClick}
+            type="button"
+            className="btn btn-success"
+          >
+            Start new game
+          </button>
         </div>
       );
     }
@@ -32,20 +70,46 @@ const Game = () => {
   return (
     <div className="card">
       <div className="card-header text-center">
-        <h1>Just a Cool Word Game</h1>
+        <h1>Just A Cool Word Game</h1>
+        <a
+          href="https://github.com/christinabranson/word-game-clone"
+          target="_blank"
+          className="link-info"
+        >
+          Check out on GitHub.
+        </a>
       </div>
 
       <div className="card-body text-center">
         {renderGameWonBanner()}
+        {renderRevealWord()}
         <PreviousGuesses />
-        <hr />
-        <NewGuess />
+        {isInputEnabled && (
+          <>
+            <hr />
+            <NewGuess />
+            <hr />
+
+            <div>
+              Give up?{" "}
+              <button
+                onClick={handleRevealWord}
+                type="button"
+                className="btn btn-danger btn-sm"
+              >
+                Reveal word
+              </button>
+            </div>
+          </>
+        )}
 
         <hr />
       </div>
       <div className="card-body text-left">
         <ul className="list-group">
-          <li className="list-group-item">Instructions</li>
+          <li className="list-group-item">
+            <strong>Instructions</strong>
+          </li>
           <li className="list-group-item list-group-item-light">
             Guess a word.
           </li>

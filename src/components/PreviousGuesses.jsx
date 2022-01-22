@@ -6,24 +6,30 @@ const CLASS_INDEX_IN_WORD = "inputIndexInWord";
 const CLASS_INDEX_NONE = "inputIndexNone";
 
 const Guess = ({ guess }) => {
-  console.log({ guess });
-  console.log(typeof guess);
   const gameState = useGameState();
   const word = gameState.word;
   const wordAsArray = word.split("");
+  const leftoverLetters = wordAsArray.map((item, index) => {
+    if (item === guess[index]) {
+      return null;
+    }
+    return item;
+  });
 
   const getValue = (index) => {
-    return guess[index] || "";
+    return guess[index].toLowerCase() || "";
   };
 
   const getInputClass = (index) => {
+    if (!leftoverLetters[index]) {
+      return CLASS_INDEX_MATCH;
+    }
+
     const value = getValue(index);
-    if (wordAsArray.includes(value)) {
-      if (wordAsArray[index] === value) {
-        return CLASS_INDEX_MATCH;
-      }
+    if (leftoverLetters.includes(value)) {
       return CLASS_INDEX_IN_WORD;
     }
+
     return CLASS_INDEX_NONE;
   };
 
@@ -33,7 +39,6 @@ const Guess = ({ guess }) => {
         <input
           value={getValue(index)}
           className={`letterInput ` + getInputClass(index)}
-          readonly
           disabled
         />
       </span>
@@ -45,7 +50,6 @@ const Guess = ({ guess }) => {
 const PreviousGuesses = () => {
   const gameState = useGameState();
   const guesses = gameState.guesses;
-  console.log({ guesses });
 
   const renderGuesses = () =>
     guesses.map((item, index) => (

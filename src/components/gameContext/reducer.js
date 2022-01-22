@@ -7,15 +7,13 @@ export const initialState = {
   word: null,
   guesses: [],
   errorMessage: null,
+  shouldRevealWord: false,
 };
 
 export const GameContextReducer = (state, action) => {
-  console.log({ action });
   const getNewGuessesArray = (newGuess) => {
     const newGuessesArray = [...state.guesses];
-    console.log({ newGuessesArray });
     newGuessesArray.push(newGuess);
-    console.log({ newGuessesArray });
     return newGuessesArray;
   };
   switch (action.type) {
@@ -34,6 +32,11 @@ export const GameContextReducer = (state, action) => {
         ...state,
         guesses: getNewGuessesArray(action.payload.guess),
         isGameWon: true,
+      };
+    case GAME_ACTIONS.GIVE_UP:
+      return {
+        ...state,
+        shouldRevealWord: true,
       };
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
