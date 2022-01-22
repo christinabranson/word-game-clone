@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/word-game-clone/static/css/main.f1c5ced8.css",
-    "main.js": "/word-game-clone/static/js/main.71c69beb.js",
+    "main.css": "/word-game-clone/static/css/main.25d7d4c3.css",
+    "main.js": "/word-game-clone/static/js/main.047fb06a.js",
     "static/js/787.b7eb5c8c.chunk.js": "/word-game-clone/static/js/787.b7eb5c8c.chunk.js",
     "static/media/5.txt": "/word-game-clone/static/media/5.5ad5b7b750d88626a416.txt",
     "index.html": "/word-game-clone/index.html",
-    "main.f1c5ced8.css.map": "/word-game-clone/static/css/main.f1c5ced8.css.map",
-    "main.71c69beb.js.map": "/word-game-clone/static/js/main.71c69beb.js.map",
+    "main.25d7d4c3.css.map": "/word-game-clone/static/css/main.25d7d4c3.css.map",
+    "main.047fb06a.js.map": "/word-game-clone/static/js/main.047fb06a.js.map",
     "787.b7eb5c8c.chunk.js.map": "/word-game-clone/static/js/787.b7eb5c8c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.f1c5ced8.css",
-    "static/js/main.71c69beb.js"
+    "static/css/main.25d7d4c3.css",
+    "static/js/main.047fb06a.js"
   ]
 }
