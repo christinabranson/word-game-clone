@@ -1,7 +1,8 @@
 import { GAME_ACTIONS } from "./actions";
 
+const STORED_SESSION_NAME = "storedWordGame";
+
 export const initialState = {
-  isGameStarted: false, // game starts on first guess
   isGameWon: false,
   numLetters: 5,
   word: null,
@@ -17,23 +18,36 @@ export const GameContextReducer = (state, action) => {
     return newGuessesArray;
   };
   switch (action.type) {
+    case GAME_ACTIONS.SESSION_OR_NEW_GAME:
+      const savedState = localStorage.getItem(STORED_SESSION_NAME);
+      if (savedState) {
+        return JSON.parse(savedState);
+      }
+      return {
+        ...initialState,
+        word: action.payload.word,
+      };
     case GAME_ACTIONS.NEW_GAME:
       return {
         ...initialState,
         word: action.payload.word,
       };
     case GAME_ACTIONS.MAKE_GUESS:
-      return {
+      const newState = {
         ...state,
         guesses: getNewGuessesArray(action.payload.guess),
       };
+      localStorage.setItem(STORED_SESSION_NAME, JSON.stringify(newState));
+      return newState;
     case GAME_ACTIONS.WIN_GAME:
+      localStorage.removeItem(STORED_SESSION_NAME);
       return {
         ...state,
         guesses: getNewGuessesArray(action.payload.guess),
         isGameWon: true,
       };
     case GAME_ACTIONS.GIVE_UP:
+      localStorage.removeItem(STORED_SESSION_NAME);
       return {
         ...state,
         shouldRevealWord: true,
