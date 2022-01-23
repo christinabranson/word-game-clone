@@ -5,6 +5,7 @@ import { validateWord } from "../dictionary/handleWords";
 const NewGuess = () => {
   const gameState = useGameState();
   const gameDispatch = useGameDispatch();
+  const shouldShowFirstGuessMessage = gameState.guesses.length === 0;
 
   const initialGuess = { 0: "", 1: "", 2: "", 3: "", 4: "" };
 
@@ -89,23 +90,38 @@ const NewGuess = () => {
   return (
     <form>
       {errorMessage && (
-        <div className="alert alert-danger" role="alert">
-          {errorMessage}
-        </div>
+        <>
+          <div class="ui hidden divider"></div>
+          <div className="ui red message" role="alert">
+            {errorMessage}
+          </div>
+        </>
       )}
+
+      {shouldShowFirstGuessMessage && (
+        <>
+          <h3 class="ui dividing header">
+            Make your first guess. Choose a valid {gameState.numLetters} letter
+            word to get started.
+          </h3>
+        </>
+      )}
+      <div class="ui hidden divider"></div>
+
       <div>{renderInputBoxes()}</div>
+      <div class="ui hidden divider"></div>
       <div className="btnFooter">
         <button
           onClick={handleSubmitGuess}
           type="submit"
-          className="btn btn-outline-primary btn-sm"
+          className="ui button green"
         >
           Guess
         </button>
         <button
           onClick={handleResetGuess}
           type="button"
-          className="btn btn-outline-danger btn-sm"
+          className="ui button red"
         >
           Reset guess
         </button>
