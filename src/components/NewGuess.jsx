@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useGameDispatch, useGameState, GAME_ACTIONS } from "./gameContext";
 import { validateWord } from "../dictionary/handleWords";
 
@@ -6,11 +6,12 @@ const NewGuess = () => {
   const gameState = useGameState();
   const gameDispatch = useGameDispatch();
   const shouldShowFirstGuessMessage = gameState.guesses.length === 0;
-
-  const initialGuess = { 0: "", 1: "", 2: "", 3: "", 4: "" };
-
-  const [guess, setGuess] = useState(initialGuess);
+  const [guess, setGuess] = useState(gameState.initialGuess);
   const [errorMessage, setErrorMessage] = useState(null);
+
+  useEffect(() => {
+    setGuess(gameState.initialGuess);
+  }, [gameState.initialGuess]);
 
   const getValue = (index) => {
     return guess[index] || "";
@@ -42,7 +43,7 @@ const NewGuess = () => {
   };
 
   const renderInputBoxes = () =>
-    Object.keys(guess).map((item, index) => (
+    Object.keys(gameState.initialGuess).map((item, index) => (
       <span key={index}>
         <input
           value={getValue(index)}
@@ -59,7 +60,7 @@ const NewGuess = () => {
 
     handleResetGuess();
 
-    const isWordValid = await validateWord(guessAsWord);
+    const isWordValid = await validateWord(guessAsWord, gameState.numLetters);
 
     if (!isWordValid) {
       setErrorMessage("Please use a valid word");
@@ -84,14 +85,14 @@ const NewGuess = () => {
   }
 
   const handleResetGuess = () => {
-    setGuess(initialGuess);
+    setGuess(gameState.initialGuess);
   };
 
   return (
     <form>
       {errorMessage && (
         <>
-          <div class="ui hidden divider"></div>
+          <div className="ui hidden divider"></div>
           <div className="ui red message" role="alert">
             {errorMessage}
           </div>
@@ -100,16 +101,16 @@ const NewGuess = () => {
 
       {shouldShowFirstGuessMessage && (
         <>
-          <h3 class="ui dividing header">
+          <h3 className="ui dividing header">
             Make your first guess. Choose a valid {gameState.numLetters} letter
             word to get started.
           </h3>
         </>
       )}
-      <div class="ui hidden divider"></div>
+      <div className="ui hidden divider"></div>
 
       <div>{renderInputBoxes()}</div>
-      <div class="ui hidden divider"></div>
+      <div className="ui hidden divider"></div>
       <div className="btnFooter">
         <button
           onClick={handleSubmitGuess}

@@ -25,11 +25,13 @@ const Game = () => {
   }, []);
 
   const handleStartNewGameClick = () => {
-    startNewGame(gameDispatch);
+    startNewGame(gameDispatch, gameState.numLetters);
   };
 
   const handleRevealWord = () => {
-    gameDispatch({ type: GAME_ACTIONS.GIVE_UP });
+    if (isInputEnabled) {
+      gameDispatch({ type: GAME_ACTIONS.GIVE_UP });
+    }
   };
 
   const renderRevealWord = () => {
@@ -94,8 +96,11 @@ const Game = () => {
 
               <div className="ui buttons">
                 <button
-                  className="ui negative button"
+                  className={`ui negative button + ${
+                    !isInputEnabled ? "disabled" : ""
+                  }`}
                   onClick={handleRevealWord}
+                  disabled={!isInputEnabled}
                 >
                   Give up
                 </button>

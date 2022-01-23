@@ -1,22 +1,30 @@
-import rawText from "./5.txt";
+const readAllWordsIntoArray = (numLetters = 5) => {
+  const dictionaryFilePath = `./words/${numLetters}.json`;
 
-const readAllWordsIntoArray = () => {
-  return fetch(rawText)
-    .then((r) => r.text())
-    .then((text) => text.split(/\r?\n/));
+  return fetch(dictionaryFilePath, {
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+  })
+    .then((r) => r.json())
+    .then((json) => json.words);
 };
 
-export const getWord = async () => {
-  const randomWord = await readAllWordsIntoArray().then((textArray) => {
-    const randomWord = textArray[Math.floor(Math.random() * textArray.length)];
-    return randomWord;
-  });
+export const getWord = async (numLetters = 5) => {
+  const randomWord = await readAllWordsIntoArray(numLetters).then(
+    (textArray) => {
+      const randomWord =
+        textArray[Math.floor(Math.random() * textArray.length)];
+      return randomWord;
+    }
+  );
 
   return randomWord;
 };
 
-export const validateWord = async (wordToCheck) => {
-  const isValid = await readAllWordsIntoArray().then((textArray) => {
+export const validateWord = async (wordToCheck, numLetters = 5) => {
+  const isValid = await readAllWordsIntoArray(numLetters).then((textArray) => {
     return !!textArray.includes(wordToCheck);
   });
 

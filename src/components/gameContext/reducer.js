@@ -2,10 +2,19 @@ import { GAME_ACTIONS } from "./actions";
 
 const STORED_SESSION_NAME = "storedWordGame";
 
+const buildInitialGuess = (numLetters) => {
+  const newObject = {};
+  new Array(numLetters).fill("").map((item, index) => {
+    newObject[index] = item;
+  });
+  return newObject;
+};
+
 export const initialState = {
   isGameWon: false,
   numLetters: 5,
   word: null,
+  initialGuess: buildInitialGuess(5),
   guesses: [],
   errorMessage: null,
   shouldRevealWord: false,
@@ -25,12 +34,23 @@ export const GameContextReducer = (state, action) => {
       }
       return {
         ...initialState,
+        numLetters: action.payload.numLetters || 5,
         word: action.payload.word,
+        initialGuess: buildInitialGuess(action.payload.numLetters),
       };
     case GAME_ACTIONS.NEW_GAME:
       return {
         ...initialState,
+        numLetters: action.payload.numLetters || 5,
         word: action.payload.word,
+        initialGuess: buildInitialGuess(action.payload.numLetters),
+      };
+    case GAME_ACTIONS.NEW_GAME_WITH_LETTER_CHANGE:
+      return {
+        ...initialState,
+        numLetters: action.payload.numLetters || 5,
+        word: action.payload.word,
+        initialGuess: buildInitialGuess(action.payload.numLetters),
       };
     case GAME_ACTIONS.MAKE_GUESS:
       const newState = {

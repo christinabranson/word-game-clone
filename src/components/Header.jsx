@@ -1,20 +1,54 @@
 import React from "react";
-import { useGameState, useGameDispatch, startNewGame } from "./gameContext";
+import {
+  useGameState,
+  useGameDispatch,
+  startNewGame,
+  changeLetterCount,
+  VALID_NUM_LETTERS,
+} from "./gameContext";
 
 const Header = () => {
   const gameState = useGameState();
   const gameDispatch = useGameDispatch();
 
+  const handleChangeNumLetters = (numLetters) => {
+    if (numLetters !== gameState.numLetters) {
+      changeLetterCount(gameDispatch, numLetters);
+    }
+  };
+
+  const renderNumberOfLettersOptions = () =>
+    VALID_NUM_LETTERS.map((item) => (
+      <div
+        className={`${gameState.numLetters === item ? "disabled" : ""} item`}
+        key={item}
+        onClick={() => handleChangeNumLetters(item)}
+        disabled={gameState.numLetters === item}
+      >
+        {item}
+      </div>
+    ));
+
   const handleStartNewGameClick = () => {
-    startNewGame(gameDispatch);
+    startNewGame(gameDispatch, gameState.numLetters);
   };
   return (
-    <div class="ui fixed inverted menu">
-      <div class="ui container">
-        <div class="header item">Word Game Clone</div>
-        <a onClick={handleStartNewGameClick} class="item">
+    <div className="ui fixed inverted menu">
+      <div className="ui container">
+        <div className="header item">Word Game Clone</div>
+        <a onClick={handleStartNewGameClick} className="item">
           Start New Game
         </a>
+      </div>
+
+      <div>
+        <div className="ui compact menu inverted">
+          <div className="ui simple dropdown item">
+            Select number of letters
+            <i className="dropdown icon"></i>
+            <div className="menu">{renderNumberOfLettersOptions()}</div>
+          </div>
+        </div>
       </div>
     </div>
   );
