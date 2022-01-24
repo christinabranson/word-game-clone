@@ -55,7 +55,10 @@ const NewGuess = () => {
 
   const handleSubmitGuess = async (event) => {
     event.preventDefault();
-    const guessAsArray = Object.keys(guess).map((key) => guess[key]);
+    /* Convert guess dict to an array, lowercase conversion is important! */
+    const guessAsArray = Object.keys(guess).map((key) =>
+      guess[key].toLowerCase()
+    );
     const guessAsWord = guessAsArray.join("").toLowerCase();
 
     handleResetGuess();

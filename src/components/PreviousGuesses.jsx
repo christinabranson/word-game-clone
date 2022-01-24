@@ -9,8 +9,11 @@ const Guess = ({ guess }) => {
   const gameState = useGameState();
   const word = gameState.word;
   const wordAsArray = word.split("");
+
+  /* Do some manipulation to ensure letters are lowercased */
+
   const leftoverLetters = wordAsArray.map((item, index) => {
-    if (item === guess[index]) {
+    if (item.toLowerCase() === guess[index].toLowerCase()) {
       return null;
     }
     return item;
@@ -21,16 +24,18 @@ const Guess = ({ guess }) => {
   };
 
   const getInputClass = (index) => {
+    let returnClass = CLASS_INDEX_NONE;
+
     if (!leftoverLetters[index]) {
-      return CLASS_INDEX_MATCH;
+      returnClass = CLASS_INDEX_MATCH;
     }
 
     const value = getValue(index);
     if (leftoverLetters.includes(value)) {
-      return CLASS_INDEX_IN_WORD;
+      returnClass = CLASS_INDEX_IN_WORD;
     }
 
-    return CLASS_INDEX_NONE;
+    return returnClass;
   };
 
   const renderInputBoxes = () =>

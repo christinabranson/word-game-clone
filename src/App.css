@@ -29,14 +29,14 @@ body {
 
 .inputIndexMatch {
   background-color: #21ba45 !important;
-  color: #ffffff;
+  color: #000000;
 
   border-color: #000000;
 }
 
 .inputIndexInWord {
   background-color: #f2711c !important;
-  color: #ffffff;
+  color: #000000;
   border-color: #000000;
 }
 
