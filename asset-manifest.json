@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/word-game-clone/static/css/main.cfbf1389.css",
-    "main.js": "/word-game-clone/static/js/main.ff6b7440.js",
+    "main.css": "/word-game-clone/static/css/main.88f5fc45.css",
+    "main.js": "/word-game-clone/static/js/main.ee86e739.js",
     "static/js/787.b7eb5c8c.chunk.js": "/word-game-clone/static/js/787.b7eb5c8c.chunk.js",
     "index.html": "/word-game-clone/index.html",
-    "main.cfbf1389.css.map": "/word-game-clone/static/css/main.cfbf1389.css.map",
-    "main.ff6b7440.js.map": "/word-game-clone/static/js/main.ff6b7440.js.map",
+    "main.88f5fc45.css.map": "/word-game-clone/static/css/main.88f5fc45.css.map",
+    "main.ee86e739.js.map": "/word-game-clone/static/js/main.ee86e739.js.map",
     "787.b7eb5c8c.chunk.js.map": "/word-game-clone/static/js/787.b7eb5c8c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.cfbf1389.css",
-    "static/js/main.ff6b7440.js"
+    "static/css/main.88f5fc45.css",
+    "static/js/main.ee86e739.js"
   ]
 }
