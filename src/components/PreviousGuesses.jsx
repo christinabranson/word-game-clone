@@ -5,45 +5,68 @@ const CLASS_INDEX_MATCH = "inputIndexMatch";
 const CLASS_INDEX_IN_WORD = "inputIndexInWord";
 const CLASS_INDEX_NONE = "inputIndexNone";
 
-const Guess = ({ guess }) => {
-  const gameState = useGameState();
-  const word = gameState.word;
-  const wordAsArray = word.split("");
+const DEBUG_MODE = process.env.NODE_ENV === "development";
 
-  /* Do some manipulation to ensure letters are lowercased */
+export const makeLowercased = (wordList) =>
+  wordList.map((item) => item.toLowerCase());
 
-  const leftoverLetters = wordAsArray.map((item, index) => {
-    if (item.toLowerCase() === guess[index].toLowerCase()) {
+export const getGuessAnalysis = (guess, word) => {
+  const loweredGuess = makeLowercased(guess);
+  const loweredWordList = makeLowercased(word.split(""));
+  const remainingLettersInWord = loweredWordList.map((item, index) => {
+    if (item === loweredGuess[index]) {
       return null;
     }
     return item;
   });
 
-  const getValue = (index) => {
-    return guess[index].toLowerCase() || "";
-  };
+  if (DEBUG_MODE) {
+    console.log(`guess:\t\t${loweredGuess.join("")}`);
+    console.log(`word:\t\t${loweredWordList.join("")}`);
+    console.log(`remaining:\t${remainingLettersInWord.join("")}`);
+  }
 
-  const getInputClass = (index) => {
-    let returnClass = CLASS_INDEX_NONE;
+  const analysis = [];
+  loweredGuess.map((guessLetter, index) => {
+    let letterClass = CLASS_INDEX_NONE;
 
-    if (!leftoverLetters[index]) {
-      returnClass = CLASS_INDEX_MATCH;
+    if (loweredWordList[index] === guessLetter) {
+      letterClass = CLASS_INDEX_MATCH;
+    } else {
+      const letterIndex = remainingLettersInWord.indexOf(guessLetter);
+      if (letterIndex > -1) {
+        letterClass = CLASS_INDEX_IN_WORD;
+        remainingLettersInWord[letterIndex] = null;
+
+        if (DEBUG_MODE) {
+          console.log(
+            `remaining:\t${remainingLettersInWord.join("")}\t\t(${guessLetter} removed)`
+          );
+        }
+      }
     }
 
-    const value = getValue(index);
-    if (leftoverLetters.includes(value)) {
-      returnClass = CLASS_INDEX_IN_WORD;
-    }
+    const guessLetterAnalysis = {
+      value: guessLetter,
+      class: letterClass,
+    };
+    analysis.push(guessLetterAnalysis);
+  });
 
-    return returnClass;
-  };
+  return analysis;
+};
+
+const Guess = ({ guess }) => {
+  const gameState = useGameState();
+  const word = gameState.word;
+  const guessAnalysis = getGuessAnalysis(guess, word);
 
   const renderInputBoxes = () =>
-    guess.map((item, index) => (
+    guessAnalysis.map((item, index) => (
       <span key={index}>
         <input
-          value={getValue(index)}
-          className={`letterInput ` + getInputClass(index)}
+          value={item.value}
+          className={`letterInput ` + item.class}
           disabled
         />
       </span>
