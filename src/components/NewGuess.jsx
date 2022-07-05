@@ -66,7 +66,7 @@ const NewGuess = () => {
     const isWordValid = await validateWord(guessAsWord, gameState.numLetters);
 
     if (!isWordValid) {
-      setErrorMessage("Please use a valid word");
+      setErrorMessage(`"${guessAsWord}" is not a valid dictionary word. Please try again.`);
       return;
     }
 
@@ -93,14 +93,6 @@ const NewGuess = () => {
 
   return (
     <form>
-      {errorMessage && (
-        <>
-          <div className="ui hidden divider"></div>
-          <div className="ui red message" role="alert">
-            {errorMessage}
-          </div>
-        </>
-      )}
 
       {shouldShowFirstGuessMessage && (
         <>
@@ -113,6 +105,16 @@ const NewGuess = () => {
       <div className="ui hidden divider"></div>
 
       <div>{renderInputBoxes()}</div>
+      <div className="ui hidden divider"></div>
+      {errorMessage && (
+        <>
+          <div className="ui hidden divider"></div>
+          <div className="ui red message" role="alert">
+            <h2 class="ui header">Error</h2>
+            <p>{errorMessage}</p>
+          </div>
+        </>
+      )}
       <div className="ui hidden divider"></div>
       <div className="btnFooter">
         <button
@@ -127,7 +129,7 @@ const NewGuess = () => {
           type="button"
           className="ui button red"
         >
-          Reset guess
+          Reset
         </button>
       </div>
     </form>

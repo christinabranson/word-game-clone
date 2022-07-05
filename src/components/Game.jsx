@@ -43,9 +43,9 @@ const Game = () => {
           <button
             onClick={handleStartNewGameClick}
             type="button"
-            className="ui button red"
+            className="ui button secondary"
           >
-            Start new game
+            New game
           </button>
         </div>
       );
@@ -57,14 +57,15 @@ const Game = () => {
     if (gameState.isGameWon) {
       return (
         <div className="ui green message" role="alert">
-          <strong>You won!</strong>
-          <div className="ui hidden divider"></div>
+          <h2 class="ui header">You won!</h2>
+          <p>No need to wait, try playing another game!</p>
+          <p>Too easy?<br/> Use the dropdown in the header to increase the number of letters.</p>
           <button
             onClick={handleStartNewGameClick}
             type="button"
-            className="ui button green"
+            className="ui button secondary"
           >
-            Start new game
+            New game
           </button>
         </div>
       );
@@ -96,6 +97,13 @@ const Game = () => {
 
               <div className="ui buttons">
                 <button
+                  className="ui positive button"
+                  onClick={handleStartNewGameClick}
+                >
+                  New game
+                </button>
+                <div className="or"></div>
+                <button
                   className={`ui negative button + ${
                     !isInputEnabled ? "disabled" : ""
                   }`}
@@ -103,13 +111,6 @@ const Game = () => {
                   disabled={!isInputEnabled}
                 >
                   Give up
-                </button>
-                <div className="or"></div>
-                <button
-                  className="ui positive button"
-                  onClick={handleStartNewGameClick}
-                >
-                  Start new game
                 </button>
               </div>
             </div>

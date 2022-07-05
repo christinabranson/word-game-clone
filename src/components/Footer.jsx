@@ -24,7 +24,7 @@ const Footer = () => (
         <a
           href="https://github.com/christinabranson/word-game-clone"
           target="_blank"
-          className="item"
+          className="button"
         >
           See on GitHub
         </a>

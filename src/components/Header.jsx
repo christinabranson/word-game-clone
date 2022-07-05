@@ -25,7 +25,7 @@ const Header = () => {
         onClick={() => handleChangeNumLetters(item)}
         disabled={gameState.numLetters === item}
       >
-        {item}
+        {item} letters
       </div>
     ));
 
@@ -37,14 +37,14 @@ const Header = () => {
       <div className="ui container">
         <div className="header item">Word Game Clone</div>
         <a onClick={handleStartNewGameClick} className="item">
-          Start New Game
+          New Game
         </a>
       </div>
 
       <div>
         <div className="ui compact menu inverted">
           <div className="ui simple dropdown item">
-            Select number of letters
+            <strong>{gameState.numLetters} letters</strong>
             <i className="dropdown icon"></i>
             <div className="menu">{renderNumberOfLettersOptions()}</div>
           </div>
