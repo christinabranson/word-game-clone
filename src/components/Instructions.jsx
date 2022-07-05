@@ -1,12 +1,7 @@
 import React from "react";
 
 const Instructions = () => (
-  <div className="ui celled list">
-    <div className="item">
-      <div className="content">
-        <h3 className="ui header">Instructions</h3>
-      </div>
-    </div>
+  <div className="ui celled list instructions">
     <div className="item">
       <div className="content">
         <div className="header">Guess a word</div>
@@ -19,8 +14,15 @@ const Instructions = () => (
         If you get a correct letter in the correct position, it will turn{" "}
         <span className="green">green</span>.
         <br />
+        <br />
         If you get a correct letter in the wrong position, it will turn{" "}
-        <span className="orange">orange</span>.
+        <span className="orange">yellow</span>.
+      </div>
+    </div>
+    <div className="item">
+      <div className="content">
+        <div className="header">Five letters too easy?</div>
+        Use the dropdown above to change the number of letters, up to 10! It gets difficult!
       </div>
     </div>
     <div className="item">
