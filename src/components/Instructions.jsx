@@ -27,6 +27,12 @@ const Instructions = () => (
     </div>
     <div className="item">
       <div className="content">
+        <div className="header">Too hard? Cheat!</div>
+        Use my <a href="https://christinabranson.github.io/word-game-cheat/" target="_blank">cheating tool</a> to help you get possible solutions!
+      </div>
+    </div>
+    <div className="item">
+      <div className="content">
         <div className="header">Having issues?</div>
         Try giving up. You'll forfeit the game, but it'll show you what the word
         was. You'll also get a message mocking you.

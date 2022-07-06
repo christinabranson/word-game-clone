@@ -66,7 +66,9 @@ const NewGuess = () => {
     const isWordValid = await validateWord(guessAsWord, gameState.numLetters);
 
     if (!isWordValid) {
-      setErrorMessage(`"${guessAsWord}" is not a valid dictionary word. Please try again.`);
+      setErrorMessage(
+        `"${guessAsWord}" is not a valid dictionary word. Please try again.`
+      );
       return;
     }
 
@@ -93,14 +95,19 @@ const NewGuess = () => {
 
   return (
     <form>
-
       {shouldShowFirstGuessMessage && (
-        <>
-          <h3 className="ui dividing header">
-            Make your first guess. Choose a valid {gameState.numLetters} letter
-            word to get started.
-          </h3>
-        </>
+        <div className="ui green message" role="alert">
+          <h2 class="ui header">Welcome to Word Game Clone!</h2>
+          <h3 style={{marginTop: "-2px",fontStyle: "italic"}}>Where you can guess words, as many times as you want!</h3>
+          <h4>
+            Choose a valid <strong>{gameState.numLetters}</strong> letter word to get started.
+          </h4>
+          <p>
+            Is <strong>{gameState.numLetters}</strong> letters too easy?
+            <br /> Use the dropdown in the header to increase the number of
+            letters per word.
+          </p>
+        </div>
       )}
       <div className="ui hidden divider"></div>
 
@@ -123,13 +130,6 @@ const NewGuess = () => {
           className="ui button green"
         >
           Guess
-        </button>
-        <button
-          onClick={handleResetGuess}
-          type="button"
-          className="ui button red"
-        >
-          Reset
         </button>
       </div>
     </form>

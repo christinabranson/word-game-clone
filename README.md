@@ -14,6 +14,10 @@ The UI is build in React (*mental TODO to convert type a Typescript project?). I
 
 The available words were generated with a small Python program located in `python-converter` which takes large lists of words for Scrabble tournament purposes, and creates files for various word lengths.
 
+## Too hard? Cheat!
+
+I've created a cheating tool ([Github](https://github.com/christinabranson/word-game-cheat)), available at https://christinabranson.github.io/word-game-cheat/
+
 ## Coming soon? Maybe? Who knows?
 
 - Keep track of streaks (at least locally in browser)

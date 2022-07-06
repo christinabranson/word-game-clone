@@ -26,7 +26,7 @@ const Footer = () => (
           target="_blank"
           className="button"
         >
-          See on GitHub
+          Check out on GitHub
         </a>
       </div>
     </div>
